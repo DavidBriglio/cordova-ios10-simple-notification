@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="https://github.com/DavidBriglio/cordova-ios10-local-notification"
+        id="cordova-ios10-local-notification" version="0.1.0">
+    <name>iOS 10 Local Notification</name>
+    <author>David Briglio</author>
+    <description>Cordova iOS 10 Local Notification - Add simple notifications to your iOS 10 application.</description>
+    <license>MIT</license>
+    <keywords>cordova,local,ios10,notification,alert</keywords>
+    <js-module src="www/notification.js" name="notification">
+        <clobbers target="cordova.plugins.ios10.notification" />
+    </js-module>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="iOS10Notification">
+                <param name="ios-package" value="iOS10Notification"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/iOS10Notification.h" />
+        <source-file src="src/ios/iOS10Notification.m" />
+    </platform>
+</plugin>

@@ -1,0 +1,33 @@
+{
+  "name": "cordova-ios10-local-notification",
+  "version": "0.1.0",
+  "description": "Cordova iOS 10 Local Notification - Add simple notifications to your iOS 10 application.",
+  "cordova": {
+    "id": "cordova-ios10-local-notification",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidBriglio/cordova-ios10-local-notification.git"
+  },
+  "keywords": [
+    "cordova",
+    "ios10",
+    "notification",
+    "alert",
+    "ios",
+    "local",
+    "10",
+    "notifications",
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "David Briglio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidBriglio/cordova-ios10-local-notification/issues"
+  },
+  "homepage": "https://github.com/DavidBriglio/cordova-ios10-local-notification#readme"
+}
