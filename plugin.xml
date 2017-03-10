@@ -7,15 +7,14 @@
     <license>MIT</license>
     <keywords>cordova,local,ios10,notification,alert</keywords>
     <js-module src="www/notification.js" name="notification">
-        <clobbers target="cordova.plugins.ios10.notification" />
+        <clobbers target="cordova.plugins.ios10.SimpleNotification" />
     </js-module>
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="iOS10Notification">
-                <param name="ios-package" value="iOS10Notification"/>
+            <feature name="SimpleNotification">
+                <param name="ios-package" value="SimpleNotification"/>
             </feature>
         </config-file>
-        <header-file src="src/ios/iOS10Notification.h" />
-        <source-file src="src/ios/iOS10Notification.m" />
+        <source-file src="src/ios/SimpleNotification.swift" />
     </platform>
 </plugin>
