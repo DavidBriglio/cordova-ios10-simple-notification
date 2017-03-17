@@ -13,11 +13,16 @@ import UserNotifications
     let title = command.arguments[1] as? String ?? ""
     let subtitle = command.arguments[2] as? String ?? ""
     let body = command.arguments[3] as? String ?? ""
-    let timetrigger = command.arguments[4] as? Double ?? 0.0
+    var timetrigger = command.arguments[4] as? Double ?? 0.001
     let actionText1 = command.arguments[5] as? String ?? ""
     let actionText2 = command.arguments[6] as? String ?? ""
     let actionText3 = command.arguments[7] as? String ?? ""
     let actionText4 = command.arguments[8] as? String ?? ""
+
+    //Make sure that the trigger time is slightly above 0 (having it at 0 causes issues)
+    if( timetrigger < 0.001 ) {
+      timetrigger = 0.001
+    }
 
     //Set the trigger time according to what the input was
     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timetrigger, repeats: false)
@@ -52,7 +57,10 @@ import UserNotifications
     let content = UNMutableNotificationContent()
     content.title = title
     content.body = body
-    content.subtitle = subtitle
+    //Make sure there is a subtitle before setting it
+    if( subtitle != "" ) {
+      content.subtitle = subtitle
+    }
     content.categoryIdentifier = "defaultcategory"
 
     //Build the request
@@ -112,14 +120,12 @@ import UserNotifications
 
   //Handles notification clicks
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-    print("Notification clicked.")
     commandDelegate.evalJs("cordova.plugins.ios10.simpleNotification.__handler(\"\(response.actionIdentifier)\")")
     completionHandler()
   }
 
   //Handles notifications firing in the foreground
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    print("Notification Being Triggered")
     completionHandler( [.alert, .sound, .badge] )
   }
 }
