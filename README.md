@@ -3,19 +3,26 @@
 This plugin was created to implement a simple notification system for cordova on iOS 10.
 
 ## Supported Features:
+- ID
 - Title
+- Subtitle
 - Body
-- Trigger Time
+- Trigger Time (Seconds)
+- Actions (Up to 4)
 
 ## Sample
-This notification will be triggered in 10 seconds.
+These notifications will be triggered in 10 seconds.
 
 ```javascript
-cordova.plugins.ios10.notification.schedule("MyApp", "New Notification!", 10.0);
+//No actions
+cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0);
+
+//Two actions
+cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Action 1", "Action 2");
 ```
 
 ## Supported Platforms:
-- iOS 10
+- iOS 10.0+
 
 ## Installation:
 This plugin can be installed from CLI with either of the following:
@@ -24,11 +31,6 @@ This plugin can be installed from CLI with either of the following:
 cordova plugins add https://github.com/DavidBriglio/cordova-ios10-local-notification
 ```
 
-##Future Development
-- Implementing click action customization
-- Add a carried payload by the notification (for action)
-- Implement some of the new iOS 10 notification features
-- Functionality to remove notifications
 
 ## Questions?
 Please see the wiki for how to use the plugin.
