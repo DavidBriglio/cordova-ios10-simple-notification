@@ -12,17 +12,18 @@ var simpleNotification = {
     __handler:function(data){ console.log(data);},
 
     //Displays the notification
-    schedule: function(id, title, body, time, action1, action2, action3) {
-        if(id === undefined || id === null || title === undefined || title === null || body === undefined || body === null || action1 === null || action2 === null || action3 === null) {
+    schedule: function(id, title, subtitle, body, time, action1, action2, action3, action4) {
+        if(id === null || title === null || body === null || subtitle === null || action1 === null ||
+          action2 === null || action3 === null || action4 === null) {
             return false;
         }
-        cordova.exec(null, null, "SimpleNotification", "schedule", [id, title, body, time, action1, action2, action3]);
+        cordova.exec(null, null, "SimpleNotification", "schedule", [id, title, subtitle, body, time, action1, action2, action3, action4]);
         return true;
     },
 
     //Remove any notifications (delivered or pending) with the id matching the paramter
     remove: function(id) {
-      if(id === undefined || id === null) {
+      if(id === null) {
         return false;
       }
       cordova.exec(null, null, "SimpleNotification", "remove", [id]);
