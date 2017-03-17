@@ -8,9 +8,10 @@
 
 var exec = require("cordova/exec");
 
-var SimpleNotification = {
+var simpleNotification = {
     __handler:function(data){ console.log(data);},
-    //Displays the banner
+
+    //Displays the notification
     schedule: function(id, title, body, time, action1, action2, action3) {
         if(id === undefined || id === null || title === undefined || title === null || body === undefined || body === null || action1 === null || action2 === null || action3 === null) {
             return false;
@@ -18,6 +19,16 @@ var SimpleNotification = {
         cordova.exec(null, null, "SimpleNotification", "schedule", [id, title, body, time, action1, action2, action3]);
         return true;
     },
+
+    //Remove any notifications (delivered or pending) with the id matching the paramter
+    remove: function(id) {
+      if(id === undefined || id === null) {
+        return false;
+      }
+      cordova.exec(null, null, "SimpleNotification", "remove", [id]);
+      return true;
+    },
+
     setHandler: function(handler) {
       if( handler !== null) {
         __handler = handler;
@@ -25,4 +36,4 @@ var SimpleNotification = {
     }
 };
 
-module.exports = SimpleNotification;
+module.exports = simpleNotification;
