@@ -9,6 +9,8 @@
 var exec = require("cordova/exec");
 
 var simpleNotification = {
+
+    //The hidden click handler function
     __handler:function(data){ console.log(data);},
 
     //Displays the notification
@@ -21,6 +23,11 @@ var simpleNotification = {
         return true;
     },
 
+    //Register the app to enable notifications
+    register: function() {
+      cordova.exec(null, null, "SimpleNotification", "register", []);
+    },
+
     //Remove any notifications (delivered or pending) with the id matching the paramter
     remove: function(id) {
       if(id === null) {
@@ -30,10 +37,13 @@ var simpleNotification = {
       return true;
     },
 
+    //Sets the handler for notification (body and action) clicks
     setHandler: function(handler) {
       if( handler !== null) {
-        __handler = handler;
+        this.__handler = handler;
+        return true;
       }
+      return false;
     }
 };
 
