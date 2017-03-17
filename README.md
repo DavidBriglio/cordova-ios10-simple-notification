@@ -3,12 +3,10 @@
 This plugin was created to implement a simple notification system for cordova on iOS 10.
 
 ## Supported Features:
-- ID
-- Title
-- Subtitle
-- Body
+- Contents: ID/Title/Subtitle/Body
 - Trigger Time (Seconds)
 - Actions (Up to 4)
+- Foreground notification support
 
 ## Sample
 These notifications will be triggered in 10 seconds.
