@@ -39,4 +39,4 @@ Feel free to send me a message, open an issue, or make pull requests!
 
 This software is released under the MIT License.
 
-David Briglio 2016.
+David Briglio 2017.
