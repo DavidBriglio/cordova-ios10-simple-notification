@@ -1,4 +1,4 @@
-# Cordova iOS10 Simple Notifications
+# Cordova iOS10 Simple Notifications [![Build Status](https://travis-ci.org/DavidBriglio/cordova-ios10-simple-notification.svg?branch=master)](https://travis-ci.org/DavidBriglio/cordova-ios10-simple-notification)
 
 This plugin was created to implement a simple local notification system for cordova on iOS 10.
 
