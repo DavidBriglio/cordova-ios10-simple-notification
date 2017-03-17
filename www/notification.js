@@ -11,11 +11,11 @@ var exec = require("cordova/exec");
 var SimpleNotification = {
     __handler:function(data){ console.log(data);},
     //Displays the banner
-    schedule: function(title, body, time, action1, action2, action3) {
-        if(title === undefined || title === null || body === undefined || body === null || action1 === null || action2 === null || action3 === null) {
+    schedule: function(id, title, body, time, action1, action2, action3) {
+        if(id === undefined || id === null || title === undefined || title === null || body === undefined || body === null || action1 === null || action2 === null || action3 === null) {
             return false;
         }
-        cordova.exec(null, null, "SimpleNotification", "schedule", [title, body, time, action1, action2, action3]);
+        cordova.exec(null, null, "SimpleNotification", "schedule", [id, title, body, time, action1, action2, action3]);
         return true;
     },
     setHandler: function(handler) {

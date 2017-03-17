@@ -1,16 +1,43 @@
+import UserNotifications
+
 @objc(SimpleNotification) class SimpleNotification : CDVPlugin {
   @objc(schedule:)
   func schedule(command: CDVInvokedUrlCommand) {
+
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (accepted, error) in
+      if !accepted {
+        print("Notification access not accepted.")
+      }
+    }
 
     //Set the result as error in case something fails
     var pluginResult = CDVPluginResult(
       status: CDVCommandStatus_ERROR
     )
 
-    let title = command.arguments[0] as? String ?? ""
-    let body = command.arguments[1] as? String ?? ""
-    //Get time
-    //Get actions
+    let id = command.arguments[0] as? String ?? ""
+    let title = command.arguments[1] as? String ?? ""
+    // let subtitle = command.arguments[2] as? String ?? ""
+    let body = command.arguments[2] as? String ?? ""
+    let timetrigger = command.arguments[3] as? Double ?? 0.0
+    // let action1 = command.arguments[4] as? String ?? ""
+    // let action2 = command.arguments[5] as? String ?? ""
+    // let action3 = command.arguments[6] as? String ?? ""
+
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timetrigger, repeats: false)
+
+    let content = UNMutableNotificationContent()
+    content.title = title
+    content.body = body
+    // content.sound = UNNotificationSound.default()
+    let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+
+    // UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    UNUserNotificationCenter.current().add(request) { (error) in
+      if let error = error {
+        print("Error: \(error)")
+      }
+    }
 
     //Set the result
     pluginResult = CDVPluginResult(

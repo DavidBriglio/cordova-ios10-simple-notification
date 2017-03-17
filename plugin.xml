@@ -7,7 +7,7 @@
     <license>MIT</license>
     <keywords>cordova,local,ios10,notification,alert</keywords>
     <js-module src="www/notification.js" name="notification">
-        <clobbers target="cordova.plugins.ios10.SimpleNotification" />
+        <clobbers target="cordova.plugins.ios10.simpleNotification" />
     </js-module>
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
