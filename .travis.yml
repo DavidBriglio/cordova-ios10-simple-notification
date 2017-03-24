@@ -1,12 +1,6 @@
 language: objective-c
-os: osx
-
-osx_image: xcode8.2
-xcode_sdk: iphonesimulator10.1
 
 install:
-  - npm install
-  - npm install ios-deploy
   - npm install -g cordova
   - cordova create testing com.tester.test Tester
   - cd testing
