@@ -9,4 +9,4 @@ install:
 
 script:
   - cordova plugin add https://github.com/DavidBriglio/cordova-ios10-simple-notification
-  - cordova build ios
+  - cordova build ios --buildflag="platform=iOS Simulator, OS:10.2"
