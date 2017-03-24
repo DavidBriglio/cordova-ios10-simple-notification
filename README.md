@@ -1,4 +1,4 @@
-# Cordova iOS10 Simple Notifications
+# Cordova iOS10 Simple Notifications [![npm version](https://badge.fury.io/js/cordova-ios10-simple-notification.svg)](https://badge.fury.io/js/cordova-ios10-simple-notification)
 
 This plugin was created to implement a simple local notification system for cordova on iOS 10.
 
