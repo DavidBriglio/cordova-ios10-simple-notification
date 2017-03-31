@@ -18,6 +18,11 @@ cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notif
 
 //Two actions
 cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Action 1", "Action 2");
+
+//...
+
+//Four actions max
+cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Action 1", "Action 2", "Action 3", "Action 4");
 ```
 
 ## Supported Platforms:
@@ -27,6 +32,12 @@ cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notif
 This plugin can be installed from CLI with either of the following:
 
 ```bash
+# Latest npm release
+cordova plugins add cordova-ios10-simple-notification
+
+# or
+
+# Github master
 cordova plugins add https://github.com/DavidBriglio/cordova-ios10-simple-notification
 ```
 

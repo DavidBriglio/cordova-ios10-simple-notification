@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="https://github.com/DavidBriglio/cordova-ios10-simple-notification"
-        id="cordova-ios10-simple-notification" version="0.1.0">
+        id="cordova-ios10-simple-notification" version="0.1.1">
     <name>iOS 10 Local Notification</name>
     <author>David Briglio</author>
     <description>Cordova iOS 10 Simple Notification - Add simple local notifications to your iOS 10 application.</description>
