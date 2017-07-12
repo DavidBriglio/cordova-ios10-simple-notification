@@ -1,5 +1,6 @@
 import UserNotifications
 
+@available(iOS 10, *)
 @objc(SimpleNotification) class SimpleNotification : CDVPlugin, UNUserNotificationCenterDelegate {
 
   @objc(schedule:)
