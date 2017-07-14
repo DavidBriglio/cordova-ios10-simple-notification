@@ -15,10 +15,11 @@ import UserNotifications
     let subtitle = command.arguments[2] as? String ?? ""
     let body = command.arguments[3] as? String ?? ""
     var timetrigger = command.arguments[4] as? Double ?? 0.001
-    let actionText1 = command.arguments[5] as? String ?? ""
-    let actionText2 = command.arguments[6] as? String ?? ""
-    let actionText3 = command.arguments[7] as? String ?? ""
-    let actionText4 = command.arguments[8] as? String ?? ""
+    let payload = command.arguments[5] as? String ?? ""
+    let actionText1 = command.arguments[6] as? String ?? ""
+    let actionText2 = command.arguments[7] as? String ?? ""
+    let actionText3 = command.arguments[8] as? String ?? ""
+    let actionText4 = command.arguments[9] as? String ?? ""
 
     //Make sure that the trigger time is slightly above 0 (having it at 0 causes issues)
     if( timetrigger < 0.001 ) {
@@ -58,6 +59,7 @@ import UserNotifications
     let content = UNMutableNotificationContent()
     content.title = title
     content.body = body
+    content.userInfo = ["payload" : payload]
     //Make sure there is a subtitle before setting it
     if( subtitle != "" ) {
       content.subtitle = subtitle
@@ -121,7 +123,8 @@ import UserNotifications
 
   //Handles notification clicks
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-    commandDelegate.evalJs("cordova.plugins.ios10.simpleNotification.__handler(\"\(response.actionIdentifier)\")")
+    let userInfo = response.notification.request.content.userInfo as NSDictionary
+    commandDelegate.evalJs("cordova.plugins.ios10.simpleNotification.__handler(\"\(response.actionIdentifier)\", \"\(userInfo["payload"] ?? "")\")")
     completionHandler()
   }
 
