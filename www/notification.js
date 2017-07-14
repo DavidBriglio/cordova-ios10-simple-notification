@@ -11,7 +11,16 @@ var exec = require("cordova/exec");
 var simpleNotification = {
 
     //The hidden click handler function
-    __handler:function(data, payload){ console.log("Action: " + data + ", Payload: " + payload); },
+    __handler:function(action, payload){
+      //Send the decoded payload to the set handler
+      this.__setHandler(action, decodeURI(payload));
+    },
+
+    //Click handler function that will be set by the user (this is default)
+    __setHandler:function(action, payload) {
+      console.log(action);
+      console.log(payload);
+    },
 
     //Displays the notification
     schedule: function(id, title, subtitle, body, time, payload, action1, action2, action3, action4) {
@@ -19,6 +28,10 @@ var simpleNotification = {
            action1 === null || action2 === null || action3 === null || action4 === null) {
             return false;
         }
+
+        //Escape the payload
+        payload = encodeURI(payload);
+
         cordova.exec(null, null, "SimpleNotification", "schedule", [id, title, subtitle, body, time, payload, action1, action2, action3, action4]);
         return true;
     },
@@ -40,7 +53,7 @@ var simpleNotification = {
     //Sets the handler for notification (body and action) clicks
     setHandler: function(handler) {
       if( handler !== null) {
-        this.__handler = handler;
+        this.__setHandler = handler;
         return true;
       }
       return false;
