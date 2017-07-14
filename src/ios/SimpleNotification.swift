@@ -124,7 +124,7 @@ import UserNotifications
   //Handles notification clicks
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo as NSDictionary
-    commandDelegate.evalJs("cordova.plugins.ios10.simpleNotification.__handler(\"\(response.actionIdentifier)\", \"\(userInfo["payload"] ?? "")\")")
+    commandDelegate.evalJs("cordova.plugins.ios10.simpleNotification.__handler(`\(response.actionIdentifier)`, `\(userInfo["payload"] ?? "")`)")
     completionHandler()
   }
 
