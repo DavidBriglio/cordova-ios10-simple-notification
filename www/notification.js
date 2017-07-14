@@ -11,15 +11,15 @@ var exec = require("cordova/exec");
 var simpleNotification = {
 
     //The hidden click handler function
-    __handler:function(data){ console.log(data);},
+    __handler:function(data, payload){ console.log("Action: " + data + ", Payload: " + payload); },
 
     //Displays the notification
-    schedule: function(id, title, subtitle, body, time, action1, action2, action3, action4) {
-        if(id === null || title === null || body === null || subtitle === null || action1 === null ||
-          action2 === null || action3 === null || action4 === null) {
+    schedule: function(id, title, subtitle, body, time, payload, action1, action2, action3, action4) {
+        if(id === null || title === null || body === null || subtitle === null || payload == null ||
+           action1 === null || action2 === null || action3 === null || action4 === null) {
             return false;
         }
-        cordova.exec(null, null, "SimpleNotification", "schedule", [id, title, subtitle, body, time, action1, action2, action3, action4]);
+        cordova.exec(null, null, "SimpleNotification", "schedule", [id, title, subtitle, body, time, payload, action1, action2, action3, action4]);
         return true;
     },
 
