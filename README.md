@@ -27,6 +27,23 @@ cordova.plugins.ios10.simpleNotification.schedule("1", "Title", "Subtitle", "New
 
 ```
 
+## Handle Payload
+Notifications will now use a custom payload handling function
+
+```javascript
+cordova.plugins.ios10.simpleNotification.setHandler((action, payload) =>
+				handlePayload(payload)
+			);
+```
+
+
+## Remove notifications
+Specify ID of notification to remove
+
+```javascript
+cordova.plugins.ios10.simpleNotification.remove("ID")
+```
+
 ## Supported Platforms:
 - iOS 10.0+
 
