@@ -32,7 +32,7 @@ var simpleNotification = {
         //Escape the payload
         payload = encodeURI(payload);
 
-        cordova.exec(null, null, "SimpleNotification", "schedule", [id.toString(), title, subtitle, body, time, payload, action1, action2, action3, action4]);
+        cordova.exec(null, null, "SimpleNotification", "schedule", [id.toString(), title, subtitle, body, Number(time), payload, action1, action2, action3, action4]);
         return true;
     },
 
