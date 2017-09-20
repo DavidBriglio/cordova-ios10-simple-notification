@@ -15,16 +15,33 @@ These notifications will be triggered in 10 seconds.
 
 ```javascript
 //No actions
-cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Payload");
+cordova.plugins.ios10.simpleNotification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Payload");
 
 //Two actions
-cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Payload", "Action 1", "Action 2");
+cordova.plugins.ios10.simpleNotification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Payload", "Action 1", "Action 2");
 
 //...
 
 //Four actions max
-cordova.plugins.ios10.notification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Payload", "Action 1", "Action 2", "Action 3", "Action 4");
+cordova.plugins.ios10.simpleNotification.schedule("1", "Title", "Subtitle", "New Notification!", 10.0, "Payload", "Action 1", "Action 2", "Action 3", "Action 4");
 
+```
+
+## Handle Payload
+Notifications will now use a custom payload handling function
+
+```javascript
+cordova.plugins.ios10.simpleNotification.setHandler((action, payload) =>
+				handlePayload(payload)
+			);
+```
+
+
+## Remove notifications
+Specify ID of notification to remove
+
+```javascript
+cordova.plugins.ios10.simpleNotification.remove("ID")
 ```
 
 ## Supported Platforms:
