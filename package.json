@@ -1,6 +1,6 @@
 {
   "name": "cordova-ios10-simple-notification",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Cordova iOS 10 Simple Notification - Add simple local notifications to your iOS 10 application.",
   "cordova": {
     "id": "cordova-ios10-simple-notification",
