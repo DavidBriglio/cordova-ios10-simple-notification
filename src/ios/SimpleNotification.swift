@@ -5,7 +5,6 @@ import UserNotifications
 
   @objc(schedule:)
   func schedule(command: CDVInvokedUrlCommand) {
-
     //Set the result as error in case something fails
     var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
 
@@ -59,6 +58,7 @@ import UserNotifications
     let content = UNMutableNotificationContent()
     content.title = title
     content.body = body
+    content.sound = UNNotificationSound.default
     content.userInfo = ["payload" : payload]
     //Make sure there is a subtitle before setting it
     if( subtitle != "" ) {
@@ -77,7 +77,6 @@ import UserNotifications
 
     //Return the result [and specify the callback to make]
     self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-
   }
 
   @objc(register:)
@@ -130,6 +129,15 @@ import UserNotifications
 
   //Handles notifications firing in the foreground
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    completionHandler( [.alert, .sound, .badge] )
+    let userInfo = notification.request.content.userInfo as NSDictionary
+
+    // If we get a push notification we do not want to handle it here
+    if (userInfo["aps"] == nil) {
+      // Local notifications show in foreground
+      completionHandler( [.alert, .sound, .badge] )
+    } else {
+      // Push notifications do not show
+      completionHandler([])
+    }
   }
 }
