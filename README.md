@@ -74,6 +74,16 @@ If the user has not agreed to allow the app to show local notifications, we must
 cordova.plugins.ios10.simpleNotification.register();
 ```
 
+## Set Delegate Method
+
+> _Ignore if not using a push plugin._
+
+This method will set this plugin as the notification delegate. This means that the plugin will handle all notification clicks and notification scheduling. This method is called automatically upon success of the `register` method, and again every time the `schedule` method is called. This method exists in case there are any timing conflicts with a push plugin setting itself as the delegate, so that we can force setting the delegate manually.
+
+```javascript
+cordova.plugins.ios10.simpleNotification.setDelegate();
+```
+
 ## Set Handler Method
 
 Set the callback that will be triggered when clicking on the notification (or notification actions). This will be given the `action` string that was clicked on (`com.apple.UNNotificationDefaultActionIdentifier` if body has been clicked), and the string payload `provided` in the schedule method.
@@ -109,6 +119,33 @@ cordova plugins add cordova-ios10-simple-notification
 # Github master
 cordova plugins add https://github.com/DavidBriglio/cordova-ios10-simple-notification
 ```
+
+## Interaction With Push Plugins
+
+> _Ignore if not using a push plugin._
+
+There are two things that are of concern when using this plugin with a push plugin:
+
+1. Notification Scheduling
+2. Notification Clicks
+
+### 1. Notification Scheduling
+
+This plugin contains a handler for showing notifications. With all local notifications it will show as normal, and pass any push notifications it receives along without any sound / vibration / notification.
+
+### 2. Notification Clicks
+
+iOS only allows for one click handler to be registered for all notifications. Whichever plugin registers itself as the current notification click handler most recently will be the plugin that will hanlde the click. For this reason, this plugin assigns itself as the click handler upon every local notification schedule. This way the plugin will always handle all notification clicks (local and push).
+
+Because of this behaviour, you must add your push notification click handling logic within whatever method you register as the click handler for this plugin. That way you can handle both local and push notification click payloads.
+
+Please also note that this behaviour will only start once one of the following methods has been called:
+
+- `register()` (with success)
+- `setDelegate()`
+- `schedule()` (delegate set on each call)
+
+The plugin will not handle notification clicks until the plugin is set as the delegate for notifications. Also be aware of when the push plugin you are using sets the delegate to itself. Make sure you understand this logic or else you may not be handling both local and push clicks properly.
 
 ## Questions?
 

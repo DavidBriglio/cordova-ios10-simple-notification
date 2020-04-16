@@ -21,7 +21,7 @@ import UserNotifications
     let actionText4 = command.arguments[9] as? String ?? ""
 
     //Make sure that the trigger time is slightly above 0 (having it at 0 causes issues)
-    if( timetrigger < 0.001 ) {
+    if (timetrigger < 0.001) {
       timetrigger = 0.001
     }
 
@@ -31,19 +31,19 @@ import UserNotifications
     //Set the notification actions
     var actions = [UNNotificationAction]()
 
-    if( actionText1 != "" ) {
+    if (actionText1 != "") {
       actions.append(UNNotificationAction(identifier: actionText1, title: actionText1, options: []))
     }
 
-    if( actionText2 != "" ) {
+    if (actionText2 != "") {
       actions.append(UNNotificationAction(identifier:actionText2, title: actionText2, options: []))
     }
 
-    if( actionText3 != "" ) {
+    if (actionText3 != "") {
       actions.append(UNNotificationAction(identifier:actionText3, title: actionText3, options: []))
     }
 
-    if( actionText4 != "" ) {
+    if (actionText4 != "") {
       actions.append(UNNotificationAction(identifier:actionText4, title: actionText4, options: []))
     }
 
@@ -59,11 +59,13 @@ import UserNotifications
     content.title = title
     content.body = body
     content.sound = UNNotificationSound.default
-    content.userInfo = ["payload" : payload]
+    content.userInfo = ["payload-simple-notification" : payload]
+
     //Make sure there is a subtitle before setting it
-    if( subtitle != "" ) {
+    if (subtitle != "") {
       content.subtitle = subtitle
     }
+    
     content.categoryIdentifier = "defaultcategory"
 
     //Build the request
@@ -88,11 +90,18 @@ import UserNotifications
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (accepted, error) in
       if accepted {
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+        UNUserNotificationCenter.current().delegate = self
       }
     }
 
     //Return the result [and specify the callback to make]
     self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+  }
+
+  @objc(setDelegate:)
+  func setDelegate(command: CDVInvokedUrlCommand) {
+    //Make sure events are handled by this class
+    UNUserNotificationCenter.current().delegate = self
   }
 
   @objc(remove:)
@@ -104,7 +113,6 @@ import UserNotifications
 
     //Make sure a valid ID has been passed in
     if (id != "") {
-
       //Remove any pending notification with the ID
       UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
 
@@ -113,7 +121,6 @@ import UserNotifications
 
       //Set the result
       pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
-
     }
 
     //Return the result [and specify the callback to make]
@@ -123,7 +130,23 @@ import UserNotifications
   //Handles notification clicks
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo as NSDictionary
-    commandDelegate.evalJs("cordova.plugins.ios10.simpleNotification.__handler(`\(response.actionIdentifier)`, `\(userInfo["payload"] ?? "")`)")
+    var payload = ""
+
+    if (userInfo.count == 1 && userInfo["payload-simple-notification"] != nil) {
+      // Handle our own notification payload
+      payload = userInfo["payload-simple-notification"] as! String
+    } else {
+      // If we are not handling our own notification, pass along all userInfo
+      // NOTE: We are handling this case so that push notification clicks can also be handled
+      do {
+        let jsonData = try JSONSerialization.data(withJSONObject: userInfo, options: JSONSerialization.WritingOptions.prettyPrinted)
+        payload = String(data: jsonData, encoding: .utf8)!
+      } catch {
+        // Do nothing if we have a JSON error
+      }
+    }
+    
+    commandDelegate.evalJs("cordova.plugins.ios10.simpleNotification.__handler(`\(response.actionIdentifier)`, `\(payload)`)")
     completionHandler()
   }
 
