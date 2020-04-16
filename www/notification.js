@@ -6,18 +6,25 @@
  */
 module.exports = {
   // The hidden click handler function
-  __handler: function(action, payload) {
-    // Send the decoded payload to the set handler
-    this.__setHandler(action, decodeURI(payload));
+  __handler: function (action, payload) {
+    try {
+      // Try to decode the payload
+      payload = decodeURI(payload);
+    } catch (e) {
+      // If we cannot decode, we are probably getting a push notification payload
+    }
+
+    // Send the data to the registered click handler
+    this.__setHandler(action, payload);
   },
 
   // Click handler function that will be set by the user (this is default)
-  __setHandler: function(action, payload) {
+  __setHandler: function (action, payload) {
     console.log(action, payload);
   },
 
   // Displays the notification
-  schedule: function(
+  schedule: function (
     id,
     title,
     subtitle,
@@ -62,12 +69,12 @@ module.exports = {
   },
 
   // Register the app to enable notifications
-  register: function() {
+  register: function () {
     cordova.exec(null, null, "SimpleNotification", "register", []);
   },
 
   // Remove any notifications (delivered or pending) with the id matching the paramter
-  remove: function(id) {
+  remove: function (id) {
     if (id === null) {
       return false;
     }
@@ -75,8 +82,13 @@ module.exports = {
     return true;
   },
 
+  // Set the notification delegate to this plugin
+  setDelegate: function () {
+    cordova.exec(null, null, "SimpleNotification", "setDelegate", []);
+  },
+
   // Sets the handler for notification (body and action) clicks
-  setHandler: function(handler) {
+  setHandler: function (handler) {
     if (handler !== null) {
       this.__setHandler = handler;
       return true;
