@@ -74,6 +74,50 @@ If the user has not agreed to allow the app to show local notifications, we must
 cordova.plugins.ios10.simpleNotification.register();
 ```
 
+## Notification Settings Method
+
+To check for what the iOS notification settings are within the iOS settings app. This will return a promise that in turn will receive an object containing all settings.
+
+Returned Object:
+| Index | iOS Version |
+|-------|-------------|
+| lockScreen | 10+ |
+| carPlay | 10+ |
+| alert | 10+ |
+| badge | 10+ |
+| sound | 10+ |
+| criticalAlert | 12+ |
+| announcement | 13+ |
+
+Return value enumerations (integers):
+| Value | Description |
+| ----- | -------------------- |
+| 0 | Not supported |
+| 1 | Disabled |
+| 2 | Enabled |
+
+```javascript
+cordova.plugins.ios10.simpleNotification
+  .getNotificationSettings()
+  .then((settings) => {
+    let value = "";
+
+    switch (settings.sound) {
+      case 0:
+        value = "Unsupported";
+        break;
+      case 1:
+        value = "Disabled";
+        break;
+      case 2:
+        value = "Enabled";
+        break;
+    }
+
+    console.log("Notification Sound: " + value);
+  });
+```
+
 ## Set Delegate Method
 
 > _Ignore if not using a push plugin._

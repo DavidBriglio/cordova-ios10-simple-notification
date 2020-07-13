@@ -127,6 +127,34 @@ import UserNotifications
     self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
   }
 
+  @objc(getNotificationSettings:)
+  func getNotificationSettings(command: CDVInvokedUrlCommand) {
+    UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { settings in
+      var payload = [
+          "lockScreen": settings.lockScreenSetting.rawValue as Int,
+          "carPlay": settings.carPlaySetting.rawValue as Int,
+          "alert": settings.alertSetting.rawValue as Int,
+          "badge": settings.badgeSetting.rawValue as Int,
+          "sound": settings.soundSetting.rawValue as Int
+      ]
+
+      if #available(iOS 12.0, *) {
+        payload["criticalAlert"] = settings.criticalAlertSetting.rawValue as Int
+      }
+
+      if #available(iOS 13.0, *) {
+        payload["announcement"] = settings.announcementSetting.rawValue as Int
+      }
+
+      let pluginResult = CDVPluginResult(
+        status: CDVCommandStatus_OK,
+        messageAs: payload)
+
+      //Return the result [and specify the callback to make]
+      self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+    })
+  }
+
   //Handles notification clicks
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo as NSDictionary

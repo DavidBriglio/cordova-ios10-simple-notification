@@ -2,6 +2,10 @@
 
 ---
 
+# v1.2.0 - 13/07/2020
+
+- Added `getNotificationSettings` method
+
 # v1.1.0 - 16/04/2020
 
 - Added handling for non-local notification clicks
