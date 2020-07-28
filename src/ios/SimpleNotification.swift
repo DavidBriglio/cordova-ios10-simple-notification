@@ -155,6 +155,15 @@ import UserNotifications
     })
   }
 
+  @objc(openNotificationSettings:)
+  func openNotificationSettings(command: CDVInvokedUrlCommand) {
+    if let bundleIdentifier = Bundle.main.bundleIdentifier, let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier) {
+      if UIApplication.shared.canOpenURL(appSettings) {
+        UIApplication.shared.open(appSettings)
+      }
+    }
+  }
+
   //Handles notification clicks
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
     let userInfo = response.notification.request.content.userInfo as NSDictionary

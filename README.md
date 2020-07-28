@@ -138,6 +138,14 @@ cordova.plugins.ios10.simpleNotification.setHandler((action, payload) =>
 );
 ```
 
+## Open Settings Method
+
+Currently there is no way on ios to open the notification section of your application settings, so until this is available this method will open the main section of your application settings. This method takes no arguments and returns no values.
+
+```javascript
+cordova.plugins.ios10.simpleNotification.openNotificationSettings();
+```
+
 ## Remove notifications
 
 Specify ID of notification to remove
