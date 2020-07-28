@@ -2,6 +2,10 @@
 
 ---
 
+# v1.3.0 - 28/07/2020
+
+- Added `openNotificationSettings` method
+
 # v1.2.0 - 13/07/2020
 
 - Added `getNotificationSettings` method

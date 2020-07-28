@@ -106,5 +106,15 @@ module.exports = {
         []
       );
     });
+  },
+
+  openNotificationSettings: function () {
+    cordova.exec(
+      null,
+      null,
+      "SimpleNotification",
+      "openNotificationSettings",
+      []
+    );
   }
 };
